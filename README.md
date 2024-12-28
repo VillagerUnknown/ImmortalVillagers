@@ -8,21 +8,8 @@ Prevents villagers from taking damage, dying, and turning into zombies.
 * Report Damage to Villagers to Logs
 * Report Respawns of Villagers to Logs
 
-## Hm hrm hm! (Version Notes)
+## Support
 
-**v1.0.2**
-
-* Reworked code for Platform changes.
-* Changed license from All Rights Reserved to CC 4.0.
-
-**v1.0.1**
-
-* Added particles to simulate villager death.
-
-**v1.0.0**
-
-* Initial release.
-
-## Hm hrm! (Support)
-
-Join VillagerUnknown's Discord Server for support at https://discord.gg/PXjXh6M38H
+- Get support and share feedback at https://discord.gg/PXjXh6M38H
+- Request features and report bugs at https://github.com/VillagerUnknown/ImmortalVillagers/issues
+- View the changelog at https://github.com/VillagerUnknown/ImmortalVillagers/blob/main/CHANGELOG.md
