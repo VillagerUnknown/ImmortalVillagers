@@ -10,6 +10,7 @@
   "text.autoconfig.villagerunknown-immortalvillagers.option.enableVillagerDamageButRespawn": "Enable Damage But Respawn",
   "text.autoconfig.villagerunknown-immortalvillagers.option.reportVillagerDamageToLogs": "Report Damage to Logs",
   "text.autoconfig.villagerunknown-immortalvillagers.option.reportVillagerRespawnsToLogs": "Report Respawns to Logs",
+  "text.autoconfig.villagerunknown-immortalvillagers.option.reportVillagerConversionsToLogs": "Report Conversions to Logs",
   "text.autoconfig.villagerunknown-immortalvillagers.option.zombieConversionChance": "Zombie Conversion Chance",
-  "text.autoconfig.villagerunknown-immortalvillagers.option.reportVillagerConversionsToLogs": "Report Conversions to Logs"
+  "text.autoconfig.villagerunknown-immortalvillagers.option.witchConversionChance": "Witch Conversion Chance"
 }

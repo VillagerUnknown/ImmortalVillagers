@@ -27,9 +27,12 @@ public class ImmortalvillagersConfigData implements me.shedaniel.autoconfig.Conf
 	public boolean reportVillagerRespawnsToLogs = false;
 	
 	@ConfigEntry.Category("Villagers")
+	public boolean reportVillagerConversionsToLogs = false;
+	
+	@ConfigEntry.Category("Villagers")
 	public float zombieConversionChance = 0F;
 	
 	@ConfigEntry.Category("Villagers")
-	public boolean reportVillagerConversionsToLogs = false;
+	public float witchConversionChance = 0F;
 	
 }
