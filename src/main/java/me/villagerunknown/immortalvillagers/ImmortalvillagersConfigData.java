@@ -11,7 +11,7 @@ public class ImmortalvillagersConfigData implements me.shedaniel.autoconfig.Conf
 	 */
 	
 	@ConfigEntry.Category("General")
-	public int maxSearchRadius = 64;
+	public int maxSearchRadiusInBlocks = 64;
 	
 	/**
 	 * Villagers
@@ -25,5 +25,14 @@ public class ImmortalvillagersConfigData implements me.shedaniel.autoconfig.Conf
 	
 	@ConfigEntry.Category("Villagers")
 	public boolean reportVillagerRespawnsToLogs = false;
+	
+	@ConfigEntry.Category("Villagers")
+	public boolean reportVillagerConversionsToLogs = false;
+	
+	@ConfigEntry.Category("Villagers")
+	public float zombieConversionChance = 0F;
+	
+	@ConfigEntry.Category("Villagers")
+	public float witchConversionChance = 0F;
 	
 }

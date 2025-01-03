@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.3]
+
+### Added
+
+- Added villager to zombie conversion chance
+- Added villager to witch conversion chance
+- Added villager to zombie and witch conversion logging
+
 ## [1.0.2]
 
 ### Changed
