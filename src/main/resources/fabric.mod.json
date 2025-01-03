@@ -3,7 +3,7 @@
   "id": "villagerunknown-immortalvillagers",
   "version": "${version}",
   "name": "VillagerUnknown's Immortal Villagers",
-  "description": "Prevents villager deaths.",
+  "description": "Prevents villagers from taking damage, dying, and turning into zombies.",
   "authors": ["VillagerUnknown"],
   "contact": {
     "homepage":"https://discord.gg/PXjXh6M38H"
