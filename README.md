@@ -1,12 +1,14 @@
 # VillagerUnknown's Immortal Villagers
 
-Prevents villagers from taking damage, dying, and turning into zombies.
+Prevents villagers from taking damage, dying, and turning into zombies and witches.
 
 **Options:**
 
 * Allow Damage to Villagers but Respawn Villagers at the Nearest Bed
 * Report Damage to Villagers to Logs
 * Report Respawns of Villagers to Logs
+* Chance for Zombie Conversion
+* Chance for Witch Conversion
 
 ## Support
 
