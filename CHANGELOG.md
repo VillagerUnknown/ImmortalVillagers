@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0]
+
+### Added
+
+- Added option to convert Nitwits to Villagers without professions by interacting with a Book.
+- Added option to convert Villagers without professions to Nitwits by interacting with Small or Tall Grass.
+
 ## [1.0.3]
 
 ### Added

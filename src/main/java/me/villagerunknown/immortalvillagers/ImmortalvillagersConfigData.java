@@ -21,18 +21,28 @@ public class ImmortalvillagersConfigData implements me.shedaniel.autoconfig.Conf
 	public boolean enableVillagerDamageButRespawn = false;
 	
 	@ConfigEntry.Category("Villagers")
-	public boolean reportVillagerDamageToLogs = false;
+	public boolean enableNitwitEducation = false;
 	
 	@ConfigEntry.Category("Villagers")
-	public boolean reportVillagerRespawnsToLogs = false;
-	
-	@ConfigEntry.Category("Villagers")
-	public boolean reportVillagerConversionsToLogs = false;
+	public boolean enableVillagerStupidification = false;
 	
 	@ConfigEntry.Category("Villagers")
 	public float zombieConversionChance = 0F;
 	
 	@ConfigEntry.Category("Villagers")
 	public float witchConversionChance = 0F;
+	
+	/**
+	 * Logging
+	 */
+	
+	@ConfigEntry.Category("Logging")
+	public boolean reportVillagerDamageToLogs = false;
+	
+	@ConfigEntry.Category("Logging")
+	public boolean reportVillagerRespawnsToLogs = false;
+	
+	@ConfigEntry.Category("Logging")
+	public boolean reportVillagerConversionsToLogs = false;
 	
 }

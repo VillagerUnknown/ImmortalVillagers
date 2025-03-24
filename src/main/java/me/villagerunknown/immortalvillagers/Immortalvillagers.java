@@ -1,5 +1,6 @@
 package me.villagerunknown.immortalvillagers;
 
+import me.villagerunknown.immortalvillagers.feature.nitwitEducationFeature;
 import me.villagerunknown.platform.Platform;
 import me.villagerunknown.immortalvillagers.feature.preventDamageToVillagersFeature;
 import me.villagerunknown.platform.PlatformMod;
@@ -32,5 +33,6 @@ public class Immortalvillagers implements ModInitializer {
 		
 		// # Activate Features
 		featureManager.addFeature( "preventDamageToVillagers", preventDamageToVillagersFeature::execute );
+		featureManager.addFeature( "nitwitEducation", nitwitEducationFeature::execute );
 	}
 }
