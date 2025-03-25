@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - Added option to convert Nitwits to Villagers without professions by interacting with a Book.
 - Added option to convert Villagers without professions to Nitwits by interacting with Small or Tall Grass.
+- Added option to reset Villager Trades by crouching and interacting with Paper renamed to the set config option. (Default: "reset")
 
 ## [1.0.3]
 

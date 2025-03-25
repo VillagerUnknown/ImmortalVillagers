@@ -27,6 +27,12 @@ public class ImmortalvillagersConfigData implements me.shedaniel.autoconfig.Conf
 	public boolean enableVillagerStupidification = false;
 	
 	@ConfigEntry.Category("Villagers")
+	public boolean enableVillagerTradesReset = false;
+	
+	@ConfigEntry.Category("Villagers")
+	public String villagerTradesResetItemName = "reset";
+	
+	@ConfigEntry.Category("Villagers")
 	public float zombieConversionChance = 0F;
 	
 	@ConfigEntry.Category("Villagers")
