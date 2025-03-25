@@ -1,5 +1,6 @@
 package me.villagerunknown.immortalvillagers;
 
+import me.villagerunknown.immortalvillagers.feature.convertWitchToVillagerFeature;
 import me.villagerunknown.immortalvillagers.feature.nitwitEducationFeature;
 import me.villagerunknown.immortalvillagers.feature.resetVillagerTradesFeature;
 import me.villagerunknown.platform.Platform;
@@ -34,6 +35,7 @@ public class Immortalvillagers implements ModInitializer {
 		
 		// # Activate Features
 		featureManager.addFeature( "preventDamageToVillagers", preventDamageToVillagersFeature::execute );
+		featureManager.addFeature( "convertWitchToVillager", convertWitchToVillagerFeature::execute );
 		featureManager.addFeature( "nitwitEducation", nitwitEducationFeature::execute );
 		featureManager.addFeature( "resetVillagerTrades", resetVillagerTradesFeature::execute );
 	}

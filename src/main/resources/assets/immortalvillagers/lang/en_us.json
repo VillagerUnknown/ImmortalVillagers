@@ -5,6 +5,12 @@
 
   "text.autoconfig.villagerunknown-immortalvillagers.option.maxSearchRadiusInBlocks": "Max Search Radius in Blocks",
 
+  "text.autoconfig.villagerunknown-immortalvillagers.category.Logging": "Logging",
+
+  "text.autoconfig.villagerunknown-immortalvillagers.option.reportVillagerDamageToLogs": "Report Damage to Logs",
+  "text.autoconfig.villagerunknown-immortalvillagers.option.reportVillagerRespawnsToLogs": "Report Respawns to Logs",
+  "text.autoconfig.villagerunknown-immortalvillagers.option.reportVillagerConversionsToLogs": "Report Conversions to Logs",
+
   "text.autoconfig.villagerunknown-immortalvillagers.category.Villagers": "Villagers",
 
   "text.autoconfig.villagerunknown-immortalvillagers.option.enableVillagerDamageButRespawn": "Enable Damage But Respawn",
@@ -12,13 +18,11 @@
   "text.autoconfig.villagerunknown-immortalvillagers.option.enableVillagerStupidification": "Enable Villager Stupidification",
   "text.autoconfig.villagerunknown-immortalvillagers.option.enableVillagerTradesReset": "Enable Villager Trades Reset",
   "text.autoconfig.villagerunknown-immortalvillagers.option.villagerTradesResetItemName": "Villager Trades Reset Item Name",
+
+  "text.autoconfig.villagerunknown-immortalvillagers.category.Conversions": "Conversions",
+
   "text.autoconfig.villagerunknown-immortalvillagers.option.zombieConversionChance": "Zombie Conversion Chance",
   "text.autoconfig.villagerunknown-immortalvillagers.option.witchConversionChance": "Witch Conversion Chance",
-
-  "text.autoconfig.villagerunknown-immortalvillagers.category.Logging": "Logging",
-
-  "text.autoconfig.villagerunknown-immortalvillagers.option.reportVillagerDamageToLogs": "Report Damage to Logs",
-  "text.autoconfig.villagerunknown-immortalvillagers.option.reportVillagerRespawnsToLogs": "Report Respawns to Logs",
-  "text.autoconfig.villagerunknown-immortalvillagers.option.reportVillagerConversionsToLogs": "Report Conversions to Logs"
+  "text.autoconfig.villagerunknown-immortalvillagers.option.enableWitchToVillagerConversion": "Enable Witch To Villager Conversion"
 
 }
