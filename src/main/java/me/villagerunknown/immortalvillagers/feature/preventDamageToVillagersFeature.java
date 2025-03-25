@@ -25,7 +25,7 @@ import java.util.List;
 
 public class preventDamageToVillagersFeature {
 	
-	public static List<EntityType> zombieConversionTypes = List.of(
+	public static List<EntityType<?>> zombieConversionTypes = List.of(
 			EntityType.ZOMBIE,
 			EntityType.ZOMBIE_VILLAGER
 	);
