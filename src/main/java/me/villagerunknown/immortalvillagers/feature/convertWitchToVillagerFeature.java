@@ -45,7 +45,9 @@ public class convertWitchToVillagerFeature {
 					witch.convertTo( EntityType.VILLAGER, true );
 					
 					world.playSoundFromEntity( witch, SoundEvents.ENTITY_WITCH_HURT, SoundCategory.NEUTRAL, 1, 1 );
-					EntityUtil.spawnParticles( witch, 1.5F, ParticleTypes.HAPPY_VILLAGER, 10, 0.05, 0.05, 0.05, 0.5);
+					EntityUtil.spawnParticles( witch, 1.5F, ParticleTypes.HAPPY_VILLAGER, 10, 0.5, 0.5, 0.5, 0.5);
+					
+					EntityUtil.reportConversionToLog( Immortalvillagers.LOGGER, witch, player );
 					
 					return ActionResult.SUCCESS;
 				} // if

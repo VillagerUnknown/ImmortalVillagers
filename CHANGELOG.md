@@ -7,8 +7,8 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Added option to convert Nitwits to Villagers without professions by interacting with a Book.
-- Added option to convert Villagers without professions to Nitwits by interacting with Small or Tall Grass.
-- Added option to reset Villager Trades by crouching and interacting with Paper renamed to the set config option. (Default: "reset")
+- Added option to convert Villagers without professions to Nitwits by interacting with a Stick renamed to the set config option. (Default: stupid)
+- Added option to reset Villager Trades by crouching and interacting with Paper renamed to the set config option. (Default: reset)
 - Added option to convert Witches into Villagers by giving them a Golden Apple or Enchanted Golden Apple while they're under the effects of Weakness.
 
 ## [1.0.3]

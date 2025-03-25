@@ -5,9 +5,9 @@ Prevents villagers from taking damage, dying, and turning into zombies or witche
 **Features**
 
 * Villagers cannot die and can optionally "respawn" at the closest bed.
-* Optionally reset Villager Trades by crouching and giving them Paper with a configurable name.
-* Optionally convert Nitwits to Villagers by giving them a Book.
-* Optionally convert Villagers to Nitwits by giving them a Book with a configurable name.
+* Optionally reset Villager Trades by crouching and giving them an Emerald or Emerald Block with a configurable name.
+* Optionally convert Nitwits to Villagers by interacting with them using a Book.
+* Optionally convert Villagers to Nitwits by interacting with them using a Stick with a configurable name.
 * Configurable Zombie and Witch conversion chances.
 * Optionally convert Witches to Villagers by giving them a Golden Apple or Enchanted Golden Apple while they're under the effects of Weakness.
 
@@ -21,10 +21,10 @@ Prevents villagers from taking damage, dying, and turning into zombies or witche
 
 * enableVillagerDamageButRespawn - Allow damage to Villagers but Respawn Villagers at the Nearest Bed. (Default: false)
 * enableNitwitEducation - Allow converting Nitwits into Villagers without a profession by interacting with them while holding a Book. (Default: false)
-* enableVillagerStupidification - Allow converting Villagers into Nitwits by interacting with them while holding a Book renamed to the set config value. (Default: false)
-* villagerStupidificationItemName - The required name of the Book to convert Villagers to Nitwits. Ignores case. (Default: nitwits for dummies) 
-* enableVillagerTradesReset - Allow Resetting Trades for Villagers by crouching and interacting with them while holding Paper renamed to the set config value. (Default: false)
-* villagerTradesResetItemName - The required name of the Paper to Reset Villager Trades. Ignores case. (Default: reset)
+* enableVillagerStupidification - Allow converting Villagers into Nitwits by interacting with them while holding a Stick renamed to the set config value. (Default: false)
+* villagerStupidificationItemName - The required name of the Stick to convert Villagers to Nitwits. Ignores case. (Default: stupid) 
+* enableVillagerTradesReset - Allow Resetting Trades for Villagers by crouching and interacting with them while holding an Emerald or Emerald Block renamed to the set config value. (Default: false)
+* villagerTradesResetItemName - The required name of the Emerald or Emerald Block to Reset Villager Trades. Ignores case. (Default: reset)
 
 * zombieConversionChance - Chance for Zombie Conversion (Default: 0)
 * witchConversionChance - Chance for Witch Conversion (Default: 0)

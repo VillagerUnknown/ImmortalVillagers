@@ -6,7 +6,8 @@
   "description": "Prevents villagers from taking damage, dying, and turning into zombies or witches.",
   "authors": ["VillagerUnknown"],
   "contact": {
-    "homepage":"https://github.com/VillagerUnknown/ImmortalVillagers"
+    "sources":"https://github.com/VillagerUnknown/ImmortalVillagers",
+    "issues":"https://github.com/VillagerUnknown/ImmortalVillagers/issues"
   },
   "license": "CC-BY-4.0",
   "icon": "assets/immortalvillagers/villagerunknown-immortal-villagers.png",
@@ -34,12 +35,5 @@
     "fabric": "*",
     "minecraft": "${minecraft_version}",
     "villagerunknown-platform": ">=1.1.1"
-  },
-  "custom": {
-    "modmenu": {
-      "links": {
-        "modmenu.discord": "https://github.com/VillagerUnknown/ImmortalVillagers"
-      }
-    }
   }
 }

@@ -5,15 +5,21 @@ import me.villagerunknown.platform.util.EntityUtil;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.VillagerEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.ParticleType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.village.VillagerProfession;
+import net.minecraft.world.World;
 
 import java.util.List;
 
@@ -26,7 +32,7 @@ public class nitwitEducationFeature {
 	);
 	
 	public static List<Item> STUPIDIFICATION_ITEMS = List.of(
-			Items.BOOK
+			Items.STICK
 	);
 	
 	public static void execute() {
@@ -43,25 +49,32 @@ public class nitwitEducationFeature {
 				ItemStack itemStack = player.getStackInHand( hand );
 				VillagerEntity villager = (VillagerEntity) entity;
 				VillagerProfession profession = villager.getVillagerData().getProfession();
+				
 				if( Immortalvillagers.CONFIG.enableNitwitEducation && profession.equals( VillagerProfession.NITWIT ) && EDUCATION_ITEMS.contains( itemStack.getItem() ) ) {
-					itemStack.decrementUnlessCreative( 1, player );
-					villager.setVillagerData( villager.getVillagerData().withProfession( VillagerProfession.NONE ) );
-					world.playSoundFromEntity( villager, SoundEvents.ENTITY_VILLAGER_CELEBRATE, SoundCategory.NEUTRAL, 1, 1 );
-					EntityUtil.spawnParticles( villager, 1.5F, ParticleTypes.HAPPY_VILLAGER, 10, 0.05, 0.05, 0.05, 0.5);
-					
-					return ActionResult.SUCCESS;
+					return convertVillager( player, hand, villager, VillagerProfession.NONE, SoundEvents.ENTITY_VILLAGER_CELEBRATE, ParticleTypes.HAPPY_VILLAGER );
 				} else if( Immortalvillagers.CONFIG.enableVillagerStupidification && profession.equals( VillagerProfession.NONE ) && STUPIDIFICATION_ITEMS.contains( itemStack.getItem() ) && itemStack.getName().getString().equalsIgnoreCase( ITEM_STRING ) ) {
-					itemStack.decrementUnlessCreative( 1, player );
-					villager.setVillagerData( villager.getVillagerData().withProfession( VillagerProfession.NITWIT ) );
-					world.playSoundFromEntity( villager, SoundEvents.ENTITY_VILLAGER_HURT, SoundCategory.NEUTRAL, 1, 1 );
-					EntityUtil.spawnParticles( villager, 1.5F, ParticleTypes.HAPPY_VILLAGER, 10, 0.05, 0.05, 0.05, 0.5);
-					
-					return ActionResult.SUCCESS;
+					return convertVillager( player, hand, villager, VillagerProfession.NITWIT, SoundEvents.ENTITY_VILLAGER_HURT, ParticleTypes.ANGRY_VILLAGER );
 				} // if, else if
 			} // if
 			
 			return ActionResult.PASS;
 		});
+	}
+	
+	private static ActionResult convertVillager( PlayerEntity player, Hand hand, VillagerEntity villager, VillagerProfession profession, SoundEvent sound, ParticleEffect particle ) {
+		World world = player.getWorld();
+		ItemStack itemStack = player.getStackInHand( hand );
+		
+		itemStack.decrementUnlessCreative( 1, player );
+		
+		villager.setVillagerData( villager.getVillagerData().withProfession( profession ) );
+		
+		world.playSoundFromEntity( villager, sound, SoundCategory.NEUTRAL, 1, 1 );
+		EntityUtil.spawnParticles( villager, 1.5F, particle, 10, 0.5, 0.5, 0.5, 0.5);
+		
+		EntityUtil.reportConversionToLog( Immortalvillagers.LOGGER, villager, player );
+		
+		return ActionResult.SUCCESS;
 	}
 	
 }
