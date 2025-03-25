@@ -11,6 +11,7 @@ import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.village.VillagerProfession;
 
@@ -18,13 +19,14 @@ import java.util.List;
 
 public class nitwitEducationFeature {
 	
+	public static String ITEM_STRING = Immortalvillagers.CONFIG.villagerStupidificationItemName;
+	
 	public static List<Item> EDUCATION_ITEMS = List.of(
 			Items.BOOK
 	);
 	
 	public static List<Item> STUPIDIFICATION_ITEMS = List.of(
-			Items.SHORT_GRASS,
-			Items.TALL_GRASS
+			Items.BOOK
 	);
 	
 	public static void execute() {
@@ -48,7 +50,7 @@ public class nitwitEducationFeature {
 					EntityUtil.spawnParticles( villager, 1.5F, ParticleTypes.HAPPY_VILLAGER, 10, 0.05, 0.05, 0.05, 0.5);
 					
 					return ActionResult.SUCCESS;
-				} else if( Immortalvillagers.CONFIG.enableVillagerStupidification && profession.equals( VillagerProfession.NONE ) && STUPIDIFICATION_ITEMS.contains( itemStack.getItem() ) ) {
+				} else if( Immortalvillagers.CONFIG.enableVillagerStupidification && profession.equals( VillagerProfession.NONE ) && STUPIDIFICATION_ITEMS.contains( itemStack.getItem() ) && itemStack.getName().getString().equalsIgnoreCase( ITEM_STRING ) ) {
 					itemStack.decrementUnlessCreative( 1, player );
 					villager.setVillagerData( villager.getVillagerData().withProfession( VillagerProfession.NITWIT ) );
 					world.playSoundFromEntity( villager, SoundEvents.ENTITY_VILLAGER_HURT, SoundCategory.NEUTRAL, 1, 1 );

@@ -41,7 +41,7 @@ public class resetVillagerTradesFeature {
 				VillagerEntity villager = (VillagerEntity) entity;
 				VillagerProfession profession = villager.getVillagerData().getProfession();
 				
-				if( !NO_RESET_PROFESSIONS.contains( profession ) && itemStack.getItem().equals( Items.PAPER ) && itemStack.getName().equals( Text.of( RESET_STRING ) ) ) {
+				if( !NO_RESET_PROFESSIONS.contains( profession ) && itemStack.getItem().equals( Items.PAPER ) && itemStack.getName().getString().equalsIgnoreCase( RESET_STRING ) ) {
 					itemStack.decrementUnlessCreative( 1, player );
 					
 					villager.setOffers(null);

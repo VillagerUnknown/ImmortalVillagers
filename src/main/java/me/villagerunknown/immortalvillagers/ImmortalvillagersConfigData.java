@@ -40,6 +40,9 @@ public class ImmortalvillagersConfigData implements me.shedaniel.autoconfig.Conf
 	public boolean enableVillagerStupidification = false;
 	
 	@ConfigEntry.Category("Villagers")
+	public String villagerStupidificationItemName = "nitwits for dummies";
+	
+	@ConfigEntry.Category("Villagers")
 	public boolean enableVillagerTradesReset = false;
 	
 	@ConfigEntry.Category("Villagers")

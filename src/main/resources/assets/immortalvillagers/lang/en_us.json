@@ -16,6 +16,7 @@
   "text.autoconfig.villagerunknown-immortalvillagers.option.enableVillagerDamageButRespawn": "Enable Damage But Respawn",
   "text.autoconfig.villagerunknown-immortalvillagers.option.enableNitwitEducation": "Enable Nitwit Education",
   "text.autoconfig.villagerunknown-immortalvillagers.option.enableVillagerStupidification": "Enable Villager Stupidification",
+  "text.autoconfig.villagerunknown-immortalvillagers.option.villagerStupidificationItemName": "Villager Stupidification Item Name",
   "text.autoconfig.villagerunknown-immortalvillagers.option.enableVillagerTradesReset": "Enable Villager Trades Reset",
   "text.autoconfig.villagerunknown-immortalvillagers.option.villagerTradesResetItemName": "Villager Trades Reset Item Name",
 
