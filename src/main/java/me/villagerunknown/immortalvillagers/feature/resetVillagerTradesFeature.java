@@ -2,6 +2,7 @@ package me.villagerunknown.immortalvillagers.feature;
 
 import me.villagerunknown.immortalvillagers.Immortalvillagers;
 import me.villagerunknown.platform.util.EntityUtil;
+import me.villagerunknown.platform.util.MerchantEntityUtil;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.VillagerEntity;
@@ -52,19 +53,7 @@ public class resetVillagerTradesFeature {
 				if( !NO_RESET_PROFESSIONS.contains( profession ) && RESET_ITEMS.contains( itemStack.getItem() ) && itemStack.getName().getString().equalsIgnoreCase( RESET_STRING ) ) {
 					itemStack.decrementUnlessCreative( 1, player );
 					
-					villager.setOffers(null);
-					
-					int level = villager.getVillagerData().getLevel();
-					TradeOfferList offers = new TradeOfferList();
-					
-					for (int i = VillagerData.MIN_LEVEL; i <= level; i++) {
-						villager.setVillagerData( villager.getVillagerData().withLevel( i ) );
-						
-						offers.addAll( villager.getOffers() );
-						villager.setOffers(null);
-					} // for
-					
-					villager.setOffers( offers );
+					MerchantEntityUtil.clearTrades( villager );
 					
 					world.playSoundFromEntity( villager, SoundEvents.ENTITY_VILLAGER_TRADE, SoundCategory.NEUTRAL, 1, 1 );
 					EntityUtil.spawnParticles( villager, 1.5F, ParticleTypes.HAPPY_VILLAGER, 10, 0.5, 0.5, 0.5, 0.5);

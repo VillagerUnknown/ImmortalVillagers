@@ -76,11 +76,7 @@ public class preventDamageToVillagersFeature {
 					BlockPos bedPos = PositionUtil.findNearestBed(entity, Immortalvillagers.CONFIG.maxSearchRadiusInBlocks);
 					
 					if( null != bedPos ) {
-						// Make the villager invisible (dead)
-						EntityUtil.addStatusEffect(entity, StatusEffects.INVISIBILITY, 7, 1, false, false, false);
-						
-						// Add particles to the world simulating death
-						EntityUtil.spawnParticles( entity, 1, ParticleTypes.CLOUD.getType(), 20, 0.1, 0.1, 0.1, 0.005 );
+						EntityUtil.simulateDeath( entity );
 						
 						// Teleport the original villager
 						EntityUtil.teleport(entity, new Vec3d(bedPos.getX() + 0.5, bedPos.getY() + 1, bedPos.getZ() + 0.5));
