@@ -14,6 +14,19 @@ public class ImmortalvillagersConfigData implements me.shedaniel.autoconfig.Conf
 	public int maxSearchRadiusInBlocks = 64;
 	
 	/**
+	 * Logging
+	 */
+	
+	@ConfigEntry.Category("Logging")
+	public boolean reportVillagerDamageToLogs = false;
+	
+	@ConfigEntry.Category("Logging")
+	public boolean reportVillagerRespawnsToLogs = false;
+	
+	@ConfigEntry.Category("Logging")
+	public boolean reportVillagerConversionsToLogs = false;
+	
+	/**
 	 * Villagers
 	 */
 	
@@ -21,18 +34,31 @@ public class ImmortalvillagersConfigData implements me.shedaniel.autoconfig.Conf
 	public boolean enableVillagerDamageButRespawn = false;
 	
 	@ConfigEntry.Category("Villagers")
-	public boolean reportVillagerDamageToLogs = false;
+	public boolean enableNitwitEducation = false;
 	
 	@ConfigEntry.Category("Villagers")
-	public boolean reportVillagerRespawnsToLogs = false;
+	public boolean enableVillagerStupidification = false;
 	
 	@ConfigEntry.Category("Villagers")
-	public boolean reportVillagerConversionsToLogs = false;
+	public String villagerStupidificationItemName = "stupid";
 	
 	@ConfigEntry.Category("Villagers")
+	public boolean enableVillagerTradesReset = false;
+	
+	@ConfigEntry.Category("Villagers")
+	public String villagerTradesResetItemName = "reset";
+	
+	/**
+	 * Conversions
+	 */
+	
+	@ConfigEntry.Category("Conversions")
 	public float zombieConversionChance = 0F;
 	
-	@ConfigEntry.Category("Villagers")
+	@ConfigEntry.Category("Conversions")
 	public float witchConversionChance = 0F;
+	
+	@ConfigEntry.Category("Conversions")
+	public boolean enableWitchToVillagerConversion = false;
 	
 }

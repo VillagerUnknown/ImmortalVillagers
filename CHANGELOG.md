@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0]
+
+### Added
+
+- Added option to convert Nitwits to Villagers without professions by interacting with a Book.
+- Added option to convert Villagers without professions to Nitwits by interacting with a Stick renamed to the set config option. (Default: stupid)
+- Added option to reset Villager Trades by crouching and interacting with Paper renamed to the set config option. (Default: reset)
+- Added option to convert Witches into Villagers by giving them a Golden Apple or Enchanted Golden Apple while they're under the effects of Weakness.
+
+### Changed
+
+- Changed Minecraft version requirement to allow the mod to run on versions past 1.21.1.
+
 ## [1.0.3]
 
 ### Added
