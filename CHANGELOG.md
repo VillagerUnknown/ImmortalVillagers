@@ -2,11 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.1.0+1.21.2]
+## [1.1.1+1.21.2]
 
 ### Changed
 
 - Changed supported Minecraft version to 1.21.2.
+
+## [1.1.1]
+
+### Fixed
+
+- Fixed issue causing villager resets to completely clear the villager's trades.
 
 ## [1.1.0]
 
