@@ -6,21 +6,28 @@ import me.villagerunknown.platform.util.MathUtil;
 import me.villagerunknown.platform.util.PositionUtil;
 import me.villagerunknown.platform.util.WorldUtil;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.advancement.criterion.Criteria;
+import net.minecraft.component.EnchantmentEffectComponentTypes;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.*;
+import net.minecraft.entity.conversion.EntityConversionContext;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.mob.ZombieVillagerEntity;
 import net.minecraft.entity.passive.VillagerEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.StackReference;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class preventDamageToVillagersFeature {
@@ -108,18 +115,18 @@ public class preventDamageToVillagersFeature {
 	public static ZombieEntity convertToZombie( VillagerEntity villagerEntity, ZombieEntity zombieEntity ) {
 		ServerWorld world = WorldUtil.getServerWorld( villagerEntity.getWorld() );
 		
-		ZombieVillagerEntity zombieVillagerEntity = villagerEntity.convertTo(EntityType.ZOMBIE_VILLAGER, false);
+		ZombieVillagerEntity zombieVillagerEntity = villagerEntity.convertTo(EntityType.ZOMBIE_VILLAGER, EntityConversionContext.create(villagerEntity, false, false), (zombie) -> {
+			zombie.initialize(world, world.getLocalDifficulty(zombie.getBlockPos()), SpawnReason.CONVERSION, new ZombieEntity.ZombieData(false, false));
+			zombie.setVillagerData(villagerEntity.getVillagerData());
+			zombie.setGossipData(villagerEntity.getGossip().serialize(NbtOps.INSTANCE));
+			zombie.setOfferData(villagerEntity.getOffers().copy());
+			zombie.setXp(villagerEntity.getExperience());
+			if (!zombie.isSilent()) {
+				world.syncWorldEvent(null, 1026, zombie.getBlockPos(), 0);
+			} // if
+		});
 		
 		if (zombieVillagerEntity != null) {
-			zombieVillagerEntity.initialize(world, world.getLocalDifficulty(zombieVillagerEntity.getBlockPos()), SpawnReason.CONVERSION, new ZombieEntity.ZombieData(false, true));
-			zombieVillagerEntity.setVillagerData(villagerEntity.getVillagerData());
-			zombieVillagerEntity.setGossipData(villagerEntity.getGossip().serialize(NbtOps.INSTANCE));
-			zombieVillagerEntity.setOfferData(villagerEntity.getOffers().copy());
-			zombieVillagerEntity.setXp(villagerEntity.getExperience());
-			if (!zombieEntity.isSilent()) {
-				world.syncWorldEvent(null, 1026, zombieEntity.getBlockPos(), 0);
-			} // if
-			
 			if( Immortalvillagers.CONFIG.reportVillagerConversionsToLogs ) {
 				EntityUtil.reportConversionToLog( Immortalvillagers.LOGGER, villagerEntity, zombieEntity );
 			} // if
