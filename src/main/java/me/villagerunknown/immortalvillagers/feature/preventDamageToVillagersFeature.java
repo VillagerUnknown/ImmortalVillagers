@@ -120,7 +120,7 @@ public class preventDamageToVillagersFeature {
 			zombie.setVillagerData(villagerEntity.getVillagerData());
 			zombie.setGossipData(villagerEntity.getGossip().serialize(NbtOps.INSTANCE));
 			zombie.setOfferData(villagerEntity.getOffers().copy());
-			zombie.setXp(villagerEntity.getExperience());
+			zombie.setExperience(villagerEntity.getExperience());
 			if (!zombie.isSilent()) {
 				world.syncWorldEvent(null, 1026, zombie.getBlockPos(), 0);
 			} // if
