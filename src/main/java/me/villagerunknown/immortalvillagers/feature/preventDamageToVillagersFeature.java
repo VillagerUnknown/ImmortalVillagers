@@ -118,7 +118,7 @@ public class preventDamageToVillagersFeature {
 		ZombieVillagerEntity zombieVillagerEntity = villagerEntity.convertTo(EntityType.ZOMBIE_VILLAGER, EntityConversionContext.create(villagerEntity, false, false), (zombie) -> {
 			zombie.initialize(world, world.getLocalDifficulty(zombie.getBlockPos()), SpawnReason.CONVERSION, new ZombieEntity.ZombieData(false, false));
 			zombie.setVillagerData(villagerEntity.getVillagerData());
-			zombie.setGossipData(villagerEntity.getGossip().serialize(NbtOps.INSTANCE));
+			zombie.setGossip(villagerEntity.getGossip());
 			zombie.setOfferData(villagerEntity.getOffers().copy());
 			zombie.setExperience(villagerEntity.getExperience());
 			if (!zombie.isSilent()) {

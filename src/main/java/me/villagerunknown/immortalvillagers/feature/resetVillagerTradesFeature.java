@@ -12,6 +12,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -21,6 +23,7 @@ import net.minecraft.village.VillagerData;
 import net.minecraft.village.VillagerProfession;
 
 import java.util.List;
+import java.util.Optional;
 
 public class resetVillagerTradesFeature {
 	
@@ -31,7 +34,7 @@ public class resetVillagerTradesFeature {
 			Items.EMERALD_BLOCK
 	);
 	
-	public static List<VillagerProfession> NO_RESET_PROFESSIONS = List.of(
+	public static List<RegistryKey<VillagerProfession>> NO_RESET_PROFESSIONS = List.of(
 			VillagerProfession.NONE,
 			VillagerProfession.NITWIT
 	);
@@ -49,17 +52,22 @@ public class resetVillagerTradesFeature {
 			if( Immortalvillagers.CONFIG.enableVillagerTradesReset && entity.getType().equals( EntityType.VILLAGER ) && player.isSneaking() ) {
 				ItemStack itemStack = player.getStackInHand( hand );
 				VillagerEntity villager = (VillagerEntity) entity;
-				VillagerProfession profession = villager.getVillagerData().getProfession();
 				
-				if( !NO_RESET_PROFESSIONS.contains( profession ) && RESET_ITEMS.contains( itemStack.getItem() ) && itemStack.getName().getString().equalsIgnoreCase( RESET_STRING ) ) {
-					itemStack.decrementUnlessCreative( 1, player );
+				Optional<RegistryKey<VillagerProfession>> professionRegistryKey = villager.getVillagerData().profession().getKey();
+				
+				if( professionRegistryKey.isPresent() ) {
+					VillagerProfession profession = Registries.VILLAGER_PROFESSION.get( professionRegistryKey.get() );
 					
-					VillagerUtil.resetTrades( villager );
-					
-					world.playSoundFromEntity( villager, SoundEvents.ENTITY_VILLAGER_TRADE, SoundCategory.NEUTRAL, 1, 1 );
-					EntityUtil.spawnParticles( villager, 1.5F, ParticleTypes.HAPPY_VILLAGER, 10, 0.5, 0.5, 0.5, 0.5);
-					
-					return ActionResult.SUCCESS;
+					if (!NO_RESET_PROFESSIONS.contains( professionRegistryKey.get() ) && RESET_ITEMS.contains(itemStack.getItem()) && itemStack.getName().getString().equalsIgnoreCase(RESET_STRING)) {
+						itemStack.decrementUnlessCreative(1, player);
+						
+						VillagerUtil.resetTrades(villager);
+						
+						world.playSoundFromEntityClient(villager, SoundEvents.ENTITY_VILLAGER_TRADE, SoundCategory.NEUTRAL, 1, 1);
+						EntityUtil.spawnParticles(villager, 1.5F, ParticleTypes.HAPPY_VILLAGER, 10, 0.5, 0.5, 0.5, 0.5);
+						
+						return ActionResult.SUCCESS;
+					} // if
 				} // if
 			} // if
 			

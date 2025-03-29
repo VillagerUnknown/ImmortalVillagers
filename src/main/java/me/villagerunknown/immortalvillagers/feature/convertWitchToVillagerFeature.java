@@ -55,7 +55,7 @@ public class convertWitchToVillagerFeature {
 					itemStack.decrementUnlessCreative( 1, player );
 					
 					witch.convertTo( EntityType.VILLAGER, EntityConversionContext.create(witch, false, false), (villager) -> {
-						Iterator var3 = witch.dropEquipment((ServerWorld) world, (stack) -> {
+						Iterator var3 = witch.dropForeignEquipment(world.getServer().getWorld( world.getRegistryKey() ), (stack) -> {
 							return !EnchantmentHelper.hasAnyEnchantmentsWith(stack, EnchantmentEffectComponentTypes.PREVENT_ARMOR_CHANGE);
 						}).iterator();
 						
@@ -74,7 +74,7 @@ public class convertWitchToVillagerFeature {
 						}
 					} );
 					
-					world.playSoundFromEntity( witch, SoundEvents.ENTITY_WITCH_HURT, SoundCategory.NEUTRAL, 1, 1 );
+					world.playSoundFromEntityClient( witch, SoundEvents.ENTITY_WITCH_HURT, SoundCategory.NEUTRAL, 1, 1 );
 					EntityUtil.spawnParticles( witch, 1.5F, ParticleTypes.HAPPY_VILLAGER, 10, 0.5, 0.5, 0.5, 0.5);
 					
 					EntityUtil.reportConversionToLog( Immortalvillagers.LOGGER, witch, player );
