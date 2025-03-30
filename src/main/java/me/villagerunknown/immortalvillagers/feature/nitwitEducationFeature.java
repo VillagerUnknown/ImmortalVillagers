@@ -12,6 +12,10 @@ import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryEntryLookup;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -48,11 +52,11 @@ public class nitwitEducationFeature {
 			if( entity.getType().equals( EntityType.VILLAGER ) ) {
 				ItemStack itemStack = player.getStackInHand( hand );
 				VillagerEntity villager = (VillagerEntity) entity;
-				VillagerProfession profession = villager.getVillagerData().getProfession();
+				VillagerProfession profession = villager.getVillagerData().profession().value();
 				
-				if( Immortalvillagers.CONFIG.enableNitwitEducation && profession.equals( VillagerProfession.NITWIT ) && EDUCATION_ITEMS.contains( itemStack.getItem() ) ) {
+				if( Immortalvillagers.CONFIG.enableNitwitEducation && profession.id().getString().equalsIgnoreCase("nitwit") && EDUCATION_ITEMS.contains( itemStack.getItem() ) ) {
 					return convertVillager( player, hand, villager, VillagerProfession.NONE, SoundEvents.ENTITY_VILLAGER_CELEBRATE, ParticleTypes.HAPPY_VILLAGER );
-				} else if( Immortalvillagers.CONFIG.enableVillagerStupidification && profession.equals( VillagerProfession.NONE ) && STUPIDIFICATION_ITEMS.contains( itemStack.getItem() ) && itemStack.getName().getString().equalsIgnoreCase( ITEM_STRING ) ) {
+				} else if( Immortalvillagers.CONFIG.enableVillagerStupidification && profession.id().getString().equalsIgnoreCase("villager") && STUPIDIFICATION_ITEMS.contains( itemStack.getItem() ) && itemStack.getName().getString().equalsIgnoreCase( ITEM_STRING ) ) {
 					return convertVillager( player, hand, villager, VillagerProfession.NITWIT, SoundEvents.ENTITY_VILLAGER_HURT, ParticleTypes.ANGRY_VILLAGER );
 				} // if, else if
 			} // if
@@ -61,15 +65,17 @@ public class nitwitEducationFeature {
 		});
 	}
 	
-	private static ActionResult convertVillager( PlayerEntity player, Hand hand, VillagerEntity villager, VillagerProfession profession, SoundEvent sound, ParticleEffect particle ) {
+	private static ActionResult convertVillager(PlayerEntity player, Hand hand, VillagerEntity villager, RegistryKey<VillagerProfession> profession, SoundEvent sound, ParticleEffect particle ) {
 		World world = player.getWorld();
 		ItemStack itemStack = player.getStackInHand( hand );
 		
 		itemStack.decrementUnlessCreative( 1, player );
 		
-		villager.setVillagerData( villager.getVillagerData().withProfession( profession ) );
+		RegistryEntry<VillagerProfession> professionEntry = Registries.VILLAGER_PROFESSION.getEntry( Registries.VILLAGER_PROFESSION.get( profession ) );
 		
-		world.playSoundFromEntity( villager, sound, SoundCategory.NEUTRAL, 1, 1 );
+		villager.setVillagerData( villager.getVillagerData().withProfession( professionEntry ) );
+		
+		world.playSoundFromEntityClient( villager, sound, SoundCategory.NEUTRAL, 1, 1 );
 		EntityUtil.spawnParticles( villager, 1.5F, particle, 10, 0.5, 0.5, 0.5, 0.5);
 		
 		EntityUtil.reportConversionToLog( Immortalvillagers.LOGGER, villager, player );
