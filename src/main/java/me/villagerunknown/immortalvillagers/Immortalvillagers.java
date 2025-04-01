@@ -38,5 +38,8 @@ public class Immortalvillagers implements ModInitializer {
 		featureManager.addFeature( "convertWitchToVillager", convertWitchToVillagerFeature::execute );
 		featureManager.addFeature( "nitwitEducation", nitwitEducationFeature::execute );
 		featureManager.addFeature( "resetVillagerTrades", resetVillagerTradesFeature::execute );
+		
+		// # Load Features
+		featureManager.loadFeatures();
 	}
 }
