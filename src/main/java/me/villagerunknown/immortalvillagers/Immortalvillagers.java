@@ -12,31 +12,24 @@ import org.slf4j.Logger;
 
 public class Immortalvillagers implements ModInitializer {
 	
-	public static PlatformMod<ImmortalvillagersConfigData> MOD = null;
-	public static String MOD_ID = null;
-	public static Logger LOGGER = null;
-	public static ImmortalvillagersConfigData CONFIG = null;
+	public static PlatformMod<ImmortalvillagersConfigData> MOD = Platform.register( "immortalvillagers", Immortalvillagers.class, ImmortalvillagersConfigData.class );
+	public static String MOD_ID = MOD.getModId();
+	public static Logger LOGGER = MOD.getLogger();
+	public static ImmortalvillagersConfigData CONFIG = MOD.getConfig();
 	
 	@Override
 	public void onInitialize() {
-		// # Register Mod w/ Platform
-		MOD = Platform.register( "immortalvillagers", Immortalvillagers.class, ImmortalvillagersConfigData.class );
-		
-		MOD_ID = MOD.getModId();
-		LOGGER = MOD.getLogger();
-		CONFIG = MOD.getConfig();
-		
-		// # Initialize Mod
-		init();
-	}
-	
-	private static void init() {
+		// # Register mod with Platform
 		Platform.init_mod( MOD );
 		
 		// # Activate Features
-		featureManager.addFeature( "preventDamageToVillagers", preventDamageToVillagersFeature::execute );
-		featureManager.addFeature( "convertWitchToVillager", convertWitchToVillagerFeature::execute );
-		featureManager.addFeature( "nitwitEducation", nitwitEducationFeature::execute );
-		featureManager.addFeature( "resetVillagerTrades", resetVillagerTradesFeature::execute );
+		featureManager.addFeature( "prevent-damage-to-villagers", preventDamageToVillagersFeature::execute );
+		featureManager.addFeature( "convert-witch-to-villager", convertWitchToVillagerFeature::execute );
+		featureManager.addFeature( "nitwit-education", nitwitEducationFeature::execute );
+		featureManager.addFeature( "reset-villager-trades", resetVillagerTradesFeature::execute );
+		
+		// # Load Features
+		featureManager.loadFeatures();
 	}
+	
 }
