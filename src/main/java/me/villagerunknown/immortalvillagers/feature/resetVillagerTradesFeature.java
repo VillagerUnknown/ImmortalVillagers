@@ -54,7 +54,11 @@ public class resetVillagerTradesFeature {
 				if( !NO_RESET_PROFESSIONS.contains( profession ) && RESET_ITEMS.contains( itemStack.getItem() ) && itemStack.getName().getString().equalsIgnoreCase( RESET_STRING ) ) {
 					itemStack.decrementUnlessCreative( 1, player );
 					
-					VillagerUtil.resetTrades(villager);
+					if( itemStack.getItem().equals( Items.EMERALD ) ) {
+						VillagerUtil.resetTrades( villager, villager.getVillagerData().getLevel() );
+					} else if( itemStack.getItem().equals( Items.EMERALD_BLOCK ) ) {
+						VillagerUtil.resetAllTrades( villager );
+					} // if
 					
 					world.playSoundFromEntity( villager, SoundEvents.ENTITY_VILLAGER_TRADE, SoundCategory.NEUTRAL, 1, 1 );
 					EntityUtil.spawnParticles( villager, 1.5F, ParticleTypes.HAPPY_VILLAGER, 10, 0.5, 0.5, 0.5, 0.5);
