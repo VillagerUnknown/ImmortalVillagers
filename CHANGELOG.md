@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- Emeralds now only reset the last trades unlocked by a Villager while Emerald Blocks will still reset all their trades.
 - Changed supported Platform version to 1.3.0. _This resolves stuttering issues and includes new features._
 
 ## [1.1.1]
