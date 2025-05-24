@@ -2,6 +2,15 @@
 
 Prevents villagers from taking damage, dying, and turning into zombies or witches.
 
+The general idea of this mod is to help you prevent the villager life-cycle from ending. 
+
+It includes optional features that allow you to convert villagers in various ways. 
+Turn a normal villager into a nitwit with a stupid stick, educate a nitwit by giving them a book, or convert witches to villagers like you would a zombie villager.
+
+Since this mod prevents villagers from dying, you might not always be satisfied with their trades. 
+That's why this mod also includes an optional feature to cycle all of a villager's trades with a configurable named Emerald or Emerald Block. 
+An Emerald Block will reset all of a Villager's trades while an Emerald will only reset the last trades unlocked.
+
 **Features**
 
 * Villagers cannot die and can optionally "respawn" at the closest bed.
