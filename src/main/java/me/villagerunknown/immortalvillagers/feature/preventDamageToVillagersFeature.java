@@ -26,6 +26,7 @@ import java.util.List;
 public class preventDamageToVillagersFeature {
 	
 	public static List<EntityType<?>> zombieConversionTypes = List.of(
+			EntityType.HUSK,
 			EntityType.ZOMBIE,
 			EntityType.ZOMBIE_VILLAGER
 	);
@@ -78,19 +79,25 @@ public class preventDamageToVillagersFeature {
 					if( null != bedPos ) {
 						EntityUtil.simulateDeath( entity );
 						
-						// Teleport the original villager
-						EntityUtil.teleport(entity, new Vec3d(bedPos.getX() + 0.5, bedPos.getY() + 1, bedPos.getZ() + 0.5));
-						
 						// Play villager death sound
 						EntityUtil.playSound( entity, SoundEvents.ENTITY_VILLAGER_DEATH, SoundCategory.NEUTRAL, 1.0F, 1.0F, false );
 						
-						// Report the death
-						if( Immortalvillagers.CONFIG.reportVillagerRespawnsToLogs ) {
-							Entity damageSourceEntity = damageSource.getSource();
-							
-							if( null != damageSourceEntity ) {
-								EntityUtil.reportKillToLog( Immortalvillagers.LOGGER, entity, damageSourceEntity );
-							} // if
+						// Teleport the original villager
+						EntityUtil.teleport(entity, new Vec3d(bedPos.getX() + 0.5, bedPos.getY() + 1, bedPos.getZ() + 0.5));
+					} else {
+						EntityUtil.simulateTotemDeath( entity );
+						
+						// Apply speed temporarily
+						EntityUtil.addStatusEffect( entity, StatusEffects.SPEED, 5, 0, true, false, false );
+						EntityUtil.addStatusEffect( entity, StatusEffects.ABSORPTION, 5, 0, true, false, false );
+					} // if, else
+					
+					// Report the death
+					if( Immortalvillagers.CONFIG.reportVillagerRespawnsToLogs ) {
+						Entity damageSourceEntity = damageSource.getSource();
+						
+						if( null != damageSourceEntity ) {
+							EntityUtil.reportKillToLog( Immortalvillagers.LOGGER, entity, damageSourceEntity );
 						} // if
 					} // if
 					
