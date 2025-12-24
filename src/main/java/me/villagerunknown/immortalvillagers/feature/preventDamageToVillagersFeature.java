@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.conversion.EntityConversionContext;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.mob.ZombieVillagerEntity;
@@ -115,18 +116,18 @@ public class preventDamageToVillagersFeature {
 	public static ZombieEntity convertToZombie( VillagerEntity villagerEntity, ZombieEntity zombieEntity ) {
 		ServerWorld world = WorldUtil.getServerWorld( villagerEntity.getWorld() );
 		
-		ZombieVillagerEntity zombieVillagerEntity = villagerEntity.convertTo(EntityType.ZOMBIE_VILLAGER, false);
+		ZombieVillagerEntity zombieVillagerEntity = villagerEntity.convertTo(EntityType.ZOMBIE_VILLAGER, EntityConversionContext.create(villagerEntity, false, false), (zombie) -> {
+			zombie.initialize(world, world.getLocalDifficulty(zombie.getBlockPos()), SpawnReason.CONVERSION, new ZombieEntity.ZombieData(false, false));
+			zombie.setVillagerData(villagerEntity.getVillagerData());
+			zombie.setGossipData(villagerEntity.getGossip().serialize(NbtOps.INSTANCE));
+			zombie.setOfferData(villagerEntity.getOffers().copy());
+			zombie.setXp(villagerEntity.getExperience());
+			if (!zombie.isSilent()) {
+				world.syncWorldEvent(null, 1026, zombie.getBlockPos(), 0);
+			} // if
+		});
 		
 		if (zombieVillagerEntity != null) {
-			zombieVillagerEntity.initialize(world, world.getLocalDifficulty(zombieVillagerEntity.getBlockPos()), SpawnReason.CONVERSION, new ZombieEntity.ZombieData(false, true));
-			zombieVillagerEntity.setVillagerData(villagerEntity.getVillagerData());
-			zombieVillagerEntity.setGossipData(villagerEntity.getGossip().serialize(NbtOps.INSTANCE));
-			zombieVillagerEntity.setOfferData(villagerEntity.getOffers().copy());
-			zombieVillagerEntity.setXp(villagerEntity.getExperience());
-			if (!zombieEntity.isSilent()) {
-				world.syncWorldEvent(null, 1026, zombieEntity.getBlockPos(), 0);
-			} // if
-			
 			if( Immortalvillagers.CONFIG.reportVillagerConversionsToLogs ) {
 				EntityUtil.reportConversionToLog( Immortalvillagers.LOGGER, villagerEntity, zombieEntity );
 			} // if
