@@ -114,7 +114,7 @@ public class preventDamageToVillagersFeature {
 	}
 	
 	public static ZombieEntity convertToZombie( VillagerEntity villagerEntity, ZombieEntity zombieEntity ) {
-		ServerWorld world = WorldUtil.getServerWorld( villagerEntity.getWorld() );
+		ServerWorld world = WorldUtil.getServerWorld( villagerEntity.getEntityWorld() );
 		
 		ZombieVillagerEntity zombieVillagerEntity = villagerEntity.convertTo(EntityType.ZOMBIE_VILLAGER, EntityConversionContext.create(villagerEntity, false, false), (zombie) -> {
 			zombie.initialize(world, world.getLocalDifficulty(zombie.getBlockPos()), SpawnReason.CONVERSION, new ZombieEntity.ZombieData(false, false));

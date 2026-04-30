@@ -65,7 +65,7 @@ public class nitwitEducationFeature {
 	}
 	
 	private static ActionResult convertVillager(PlayerEntity player, Hand hand, VillagerEntity villager, RegistryKey<VillagerProfession> profession, SoundEvent sound, ParticleEffect particle ) {
-		World world = player.getWorld();
+		World world = player.getEntityWorld();
 		ItemStack itemStack = player.getStackInHand( hand );
 		
 		itemStack.decrementUnlessCreative( 1, player );
