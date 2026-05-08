@@ -6,21 +6,19 @@ import me.villagerunknown.platform.util.MathUtil;
 import me.villagerunknown.platform.util.PositionUtil;
 import me.villagerunknown.platform.util.WorldUtil;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.conversion.EntityConversionContext;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.mob.ZombieEntity;
-import net.minecraft.entity.mob.ZombieVillagerEntity;
-import net.minecraft.entity.passive.VillagerEntity;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.ConversionParams;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.monster.zombie.Zombie;
+import net.minecraft.world.entity.monster.zombie.ZombieVillager;
+import net.minecraft.world.entity.npc.villager.Villager;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
@@ -40,15 +38,15 @@ public class preventDamageToVillagersFeature {
 	private static void registerInvincibleVillagers() {
 		ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, damageSource, amount) -> {
 			if( !Immortalvillagers.CONFIG.enableVillagerDamageButRespawn ) {
-				if (entity instanceof VillagerEntity) {
+				if (entity instanceof Villager) {
 					// Cancel the damage if the entity is a villager
 					return false;
 				} // if
 			} else {
-				if (entity instanceof VillagerEntity) {
+				if (entity instanceof Villager) {
 					// Send a message on damage
 					if( Immortalvillagers.CONFIG.reportVillagerDamageToLogs ) {
-						Entity damageSourceEntity = damageSource.getSource();
+						Entity damageSourceEntity = damageSource.getEntity();
 						
 						if( null != damageSourceEntity ) {
 							EntityUtil.reportAttackToLog( Immortalvillagers.LOGGER, entity, damageSourceEntity );
@@ -63,17 +61,17 @@ public class preventDamageToVillagersFeature {
 	
 	private static void registerRespawnableVillagers() {
 		ServerLivingEntityEvents.ALLOW_DEATH.register((entity, damageSource, amount) -> {
-			Entity sourceEntity = damageSource.getSource();
+			Entity sourceEntity = damageSource.getEntity();
 			
 			if( null != sourceEntity && zombieConversionTypes.contains( sourceEntity.getType() ) && MathUtil.hasChance( Immortalvillagers.CONFIG.zombieConversionChance ) ) {
-				convertToZombie((VillagerEntity) entity, (ZombieEntity) sourceEntity);
+				convertToZombie((Villager) entity, (Zombie) sourceEntity);
 				
 				return false;
 			} // if
 			
 			if( Immortalvillagers.CONFIG.enableVillagerDamageButRespawn ) {
 				
-				if (entity instanceof VillagerEntity) {
+				if (entity instanceof Villager) {
 					// Find the bed position
 					BlockPos bedPos = PositionUtil.findNearestBed(entity, Immortalvillagers.CONFIG.maxSearchRadiusInBlocks);
 					
@@ -81,21 +79,21 @@ public class preventDamageToVillagersFeature {
 						EntityUtil.simulateDeath( entity );
 						
 						// Play villager death sound
-						EntityUtil.playSound( entity, SoundEvents.ENTITY_VILLAGER_DEATH, SoundCategory.NEUTRAL, 1.0F, 1.0F, false );
+						EntityUtil.playSound( entity, SoundEvents.VILLAGER_DEATH, SoundSource.NEUTRAL, 1.0F, 1.0F, false );
 						
 						// Teleport the original villager
-						EntityUtil.teleport(entity, new Vec3d(bedPos.getX() + 0.5, bedPos.getY() + 1, bedPos.getZ() + 0.5));
+						EntityUtil.teleport(entity, new Vec3(bedPos.getX() + 0.5, bedPos.getY() + 1, bedPos.getZ() + 0.5));
 					} else {
 						EntityUtil.simulateTotemDeath( entity );
 						
 						// Apply speed temporarily
-						EntityUtil.addStatusEffect( entity, StatusEffects.SPEED, 5, 0, true, false, false );
-						EntityUtil.addStatusEffect( entity, StatusEffects.ABSORPTION, 5, 0, true, false, false );
+						EntityUtil.addStatusEffect( entity, MobEffects.SPEED, 5, 0, true, false, false );
+						EntityUtil.addStatusEffect( entity, MobEffects.ABSORPTION, 5, 0, true, false, false );
 					} // if, else
 					
 					// Report the death
 					if( Immortalvillagers.CONFIG.reportVillagerRespawnsToLogs ) {
-						Entity damageSourceEntity = damageSource.getSource();
+						Entity damageSourceEntity = damageSource.getEntity();
 						
 						if( null != damageSourceEntity ) {
 							EntityUtil.reportKillToLog( Immortalvillagers.LOGGER, entity, damageSourceEntity );
@@ -113,23 +111,24 @@ public class preventDamageToVillagersFeature {
 		});
 	}
 	
-	public static ZombieEntity convertToZombie( VillagerEntity villagerEntity, ZombieEntity zombieEntity ) {
-		ServerWorld world = WorldUtil.getServerWorld( villagerEntity.getEntityWorld() );
+	public static Zombie convertToZombie( Villager villager, Zombie zombieEntity ) {
+		ServerLevel level = WorldUtil.getServerWorld(villager.level());
 		
-		ZombieVillagerEntity zombieVillagerEntity = villagerEntity.convertTo(EntityType.ZOMBIE_VILLAGER, EntityConversionContext.create(villagerEntity, false, false), (zombie) -> {
-			zombie.initialize(world, world.getLocalDifficulty(zombie.getBlockPos()), SpawnReason.CONVERSION, new ZombieEntity.ZombieData(false, false));
-			zombie.setVillagerData(villagerEntity.getVillagerData());
-			zombie.setGossip(villagerEntity.getGossip());
-			zombie.setOfferData(villagerEntity.getOffers().copy());
-			zombie.setExperience(villagerEntity.getExperience());
+		ZombieVillager zombieVillagerEntity = (ZombieVillager)villager.convertTo(EntityType.ZOMBIE_VILLAGER, ConversionParams.single(villager, true, true), (zombie) -> {
+			zombie.finalizeSpawn(level, level.getCurrentDifficultyAt(zombie.blockPosition()), EntitySpawnReason.CONVERSION, new Zombie.ZombieGroupData(false, true));
+			zombie.setVillagerData(villager.getVillagerData());
+			zombie.setGossips(villager.getGossips().copy());
+			zombie.setTradeOffers(villager.getOffers().copy());
+			zombie.setVillagerXp(villager.getVillagerXp());
 			if (!zombie.isSilent()) {
-				world.syncWorldEvent(null, 1026, zombie.getBlockPos(), 0);
-			} // if
+				level.levelEvent((Entity)null, 1026, zombie.blockPosition(), 0);
+			}
+			
 		});
 		
 		if (zombieVillagerEntity != null) {
 			if( Immortalvillagers.CONFIG.reportVillagerConversionsToLogs ) {
-				EntityUtil.reportConversionToLog( Immortalvillagers.LOGGER, villagerEntity, zombieEntity );
+				EntityUtil.reportConversionToLog( Immortalvillagers.LOGGER, villager, zombieEntity );
 			} // if
 		} // if
 		

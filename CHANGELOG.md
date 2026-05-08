@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0.+26.1]
+
+### Changed
+
+- Changed supported Minecraft version.
+- Changed mappings from Yarn to Mojang.
+
 ## [1.2.0.+1.21.9]
 
 ### Changed
