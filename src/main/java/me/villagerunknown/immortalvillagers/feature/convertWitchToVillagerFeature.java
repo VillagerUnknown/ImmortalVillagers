@@ -3,19 +3,15 @@ package me.villagerunknown.immortalvillagers.feature;
 import me.villagerunknown.immortalvillagers.Immortalvillagers;
 import me.villagerunknown.platform.util.EntityUtil;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.village.ReputationEventType;
 import net.minecraft.world.entity.monster.Witch;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -42,14 +38,14 @@ public class convertWitchToVillagerFeature {
 				return InteractionResult.PASS;
 			} // if
 			
-			if( entity.getType().equals( EntityType.WITCH ) ) {
+			if( entity.getType().equals( EntityTypes.WITCH ) ) {
 				ItemStack itemStack = player.getItemInHand( hand );
 				Witch witch = (Witch) entity;
 				
 				if( Immortalvillagers.CONFIG.enableWitchToVillagerConversion && witch.hasEffect( MobEffects.WEAKNESS ) && CONVERSION_ITEMS.contains( itemStack.getItem() ) ) {
 					itemStack.consume( 1, player );
 					
-					witch.convertTo( EntityType.VILLAGER, ConversionParams.single(witch, true, true), (villager) -> {
+					witch.convertTo( EntityTypes.VILLAGER, ConversionParams.single(witch, true, true), (villager) -> {
 						ServerLevel serverLevel = world.getServer().getLevel( world.dimension() );
 						
 						for(EquipmentSlot undroppedSlot : witch.dropPreservedEquipment(serverLevel, (stack) -> !EnchantmentHelper.has(stack, EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE))) {

@@ -15,6 +15,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.entity.npc.villager.VillagerProfession;
 import net.minecraft.world.entity.player.Player;
@@ -47,7 +48,7 @@ public class nitwitEducationFeature {
 				return InteractionResult.PASS;
 			} // if
 			
-			if( entity.getType().equals( EntityType.VILLAGER ) ) {
+			if( entity.getType().equals( EntityTypes.VILLAGER ) ) {
 				ItemStack itemStack = player.getItemInHand( hand );
 				Villager villager = (Villager) entity;
 				VillagerProfession profession = villager.getVillagerData().profession().value();

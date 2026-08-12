@@ -13,6 +13,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.entity.npc.villager.VillagerProfession;
 import net.minecraft.world.item.Item;
@@ -47,7 +48,7 @@ public class resetVillagerTradesFeature {
 				return InteractionResult.PASS;
 			} // if
 			
-			if( Immortalvillagers.CONFIG.enableVillagerTradesReset && entity.getType().equals( EntityType.VILLAGER ) && player.isCrouching() ) {
+			if( Immortalvillagers.CONFIG.enableVillagerTradesReset && entity.getType().equals( EntityTypes.VILLAGER ) && player.isCrouching() ) {
 				ItemStack itemStack = player.getItemInHand( hand );
 				Villager villager = (Villager) entity;
 				
@@ -62,7 +63,7 @@ public class resetVillagerTradesFeature {
 						
 						if( !NO_RESET_PROFESSIONS.contains( professionKey.get() ) && RESET_ITEMS.contains( itemStack.getItem() ) && customName.getString().equalsIgnoreCase( RESET_STRING ) ) {
 							itemStack.consume( 1, player );
-							Immortalvillagers.LOGGER.info("reset");
+							
 							if( itemStack.getItem().equals( Items.EMERALD ) ) {
 								VillagerUtil.resetTrades( villager, villager.getVillagerData().level() );
 							} else if( itemStack.getItem().equals( Items.EMERALD_BLOCK ) ) {

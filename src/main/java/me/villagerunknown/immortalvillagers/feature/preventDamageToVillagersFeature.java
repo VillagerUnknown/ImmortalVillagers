@@ -11,10 +11,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.ConversionParams;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.monster.zombie.Zombie;
 import net.minecraft.world.entity.monster.zombie.ZombieVillager;
 import net.minecraft.world.entity.npc.villager.Villager;
@@ -25,9 +22,9 @@ import java.util.List;
 public class preventDamageToVillagersFeature {
 	
 	public static List<EntityType<?>> zombieConversionTypes = List.of(
-			EntityType.HUSK,
-			EntityType.ZOMBIE,
-			EntityType.ZOMBIE_VILLAGER
+			EntityTypes.HUSK,
+			EntityTypes.ZOMBIE,
+			EntityTypes.ZOMBIE_VILLAGER
 	);
 	
 	public static void execute() {
@@ -114,7 +111,7 @@ public class preventDamageToVillagersFeature {
 	public static Zombie convertToZombie( Villager villager, Zombie zombieEntity ) {
 		ServerLevel level = WorldUtil.getServerWorld(villager.level());
 		
-		ZombieVillager zombieVillagerEntity = (ZombieVillager)villager.convertTo(EntityType.ZOMBIE_VILLAGER, ConversionParams.single(villager, true, true), (zombie) -> {
+		ZombieVillager zombieVillagerEntity = (ZombieVillager)villager.convertTo(EntityTypes.ZOMBIE_VILLAGER, ConversionParams.single(villager, true, true), (zombie) -> {
 			zombie.finalizeSpawn(level, level.getCurrentDifficultyAt(zombie.blockPosition()), EntitySpawnReason.CONVERSION, new Zombie.ZombieGroupData(false, true));
 			zombie.setVillagerData(villager.getVillagerData());
 			zombie.setGossips(villager.getGossips().copy());
