@@ -2,44 +2,50 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.2.0.+26.1]
+## [1.2.1+26.1]
+
+### Fixed
+
+- Fixed villager trade resets not resetting trades.
+
+## [1.2.0+26.1]
 
 ### Changed
 
 - Changed supported Minecraft version.
 - Changed mappings from Yarn to Mojang.
 
-## [1.2.0.+1.21.9]
+## [1.2.0+1.21.9]
 
 ### Changed
 
 - Changed supported Minecraft version.
 
-## [1.2.0.+1.21.6]
+## [1.2.0+1.21.6]
 
 ### Changed
 
 - Changed supported Minecraft version.
 
-## [1.2.0.+1.21.5]
+## [1.2.0+1.21.5]
 
 ### Changed
 
 - Changed supported Minecraft version.
 
-## [1.2.0.+1.21.4]
+## [1.2.0+1.21.4]
 
 ### Changed
 
 - Changed supported Minecraft version.
 
-## [1.2.0.+1.21.3]
+## [1.2.0+1.21.3]
 
 ### Changed
 
 - Changed supported Minecraft version.
 
-## [1.2.0.+1.21.2]
+## [1.2.0+1.21.2]
 
 ### Changed
 
