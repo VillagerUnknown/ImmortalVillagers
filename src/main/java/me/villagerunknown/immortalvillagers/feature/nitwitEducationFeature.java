@@ -8,7 +8,10 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -22,8 +25,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
+import java.util.Objects;
 
 public class nitwitEducationFeature {
 	
@@ -52,10 +57,14 @@ public class nitwitEducationFeature {
 				Villager villager = (Villager) entity;
 				VillagerProfession profession = villager.getVillagerData().profession().value();
 				
+				@Nullable Component customName = itemStack.getCustomName();
+				
 				if( Immortalvillagers.CONFIG.enableNitwitEducation && profession.name().getString().equalsIgnoreCase("nitwit") && EDUCATION_ITEMS.contains( itemStack.getItem() ) ) {
 					return convertVillager( player, hand, villager, VillagerProfession.NONE, SoundEvents.VILLAGER_CELEBRATE, ParticleTypes.HAPPY_VILLAGER );
-				} else if( Immortalvillagers.CONFIG.enableVillagerStupidification && profession.name().getString().equalsIgnoreCase("villager") && STUPIDIFICATION_ITEMS.contains( itemStack.getItem() ) && itemStack.getItemName().getString().equalsIgnoreCase( ITEM_STRING ) ) {
-					return convertVillager( player, hand, villager, VillagerProfession.NITWIT, SoundEvents.VILLAGER_HURT, ParticleTypes.ANGRY_VILLAGER );
+				} else if( Immortalvillagers.CONFIG.enableVillagerStupidification && profession.name().getString().equalsIgnoreCase("villager") && STUPIDIFICATION_ITEMS.contains( itemStack.getItem() ) && null != customName ) {
+					if( customName.getString().equalsIgnoreCase( ITEM_STRING ) ) {
+						return convertVillager( player, hand, villager, VillagerProfession.NITWIT, SoundEvents.VILLAGER_HURT, ParticleTypes.ANGRY_VILLAGER );
+					} // if
 				} // if, else if
 			} // if
 			
@@ -69,9 +78,17 @@ public class nitwitEducationFeature {
 		
 		itemStack.consume( 1, player );
 		
-		Holder<VillagerProfession> professionEntry = villager.getVillagerData().profession();
+		villager.setVillagerData( villager.getVillagerData().withProfession( world.registryAccess(), profession ) );
 		
-		villager.setVillagerData( villager.getVillagerData().withProfession( professionEntry ) );
+		MinecraftServer server = world.getServer();
+		
+		if( null != server ) {
+			@Nullable ServerLevel serverLevel = server.getLevel(world.dimension());
+			
+			if( null != serverLevel ) {
+				villager.refreshBrain(serverLevel);
+			} // if
+		} // if
 		
 		EntityUtil.playSound( villager, sound, SoundSource.NEUTRAL, 1, 1, false );
 		EntityUtil.spawnParticles( villager, 1.5F, particle, 10, 0.5, 0.5, 0.5, 0.5);

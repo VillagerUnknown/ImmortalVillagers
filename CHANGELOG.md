@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.2+26.1]
+
+### Fixed
+
+- Fixed villager education and stupidication. Villagers now properly accept jobs after being educated.
+
 ## [1.2.1+26.1]
 
 ### Fixed
